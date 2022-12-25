@@ -2,12 +2,14 @@
   box-sizing: border-box;
 }
 
-html {
-}
+/* html {
+} */
 
 body {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
   margin: 0;
-  color: var(--gray3);
+  color: var(--blc);
+  text-align: center;
 }
 
 h1,
@@ -20,8 +22,13 @@ h6 {
   font-family: 'Edu VIC WA NT Beginner', cursive;
 }
 
+h1 {
+  margin: 30px;
+  font-size: 1.75rem;
+}
+
 p {
-  margin: 0 0 1em;
+  margin: 0;
 }
 
 a {

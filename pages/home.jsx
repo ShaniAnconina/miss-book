@@ -1,10 +1,10 @@
 import { UserPreview } from '../cmps/user-preview.jsx'
 
-export function Home() {
+export function HomePage() {
     return (
         <section>
-            <h2>Home Sweet Home</h2>
-            <UserPreview />
+            <h2>Welcome to Miss Books!</h2>
+            {/* <UserPreview /> */}
         </section>
     )
 }
