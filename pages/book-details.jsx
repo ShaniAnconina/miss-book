@@ -7,6 +7,7 @@ import { bookService } from "../services/book.service.js"
 
 export function BookDetails() {
     const [book, setBook] = useState(null)
+    const [nextBookId, setNextBookId] = useState('OXeMG8wNskc')
     const params = useParams()
     const navigate = useNavigate()
     
@@ -46,6 +47,8 @@ export function BookDetails() {
         <button onClick={onGoBack}>Go Back</button>
         <Link to={`/book/edit/${book.id}`} className="btn">Edit book</Link>
         <hr />
-        <AddReview />
+        <Link to={`/book/${nextBookId}`}>Next book</Link>
+        <hr />
+        {/* <AddReview /> */}
     </section>
 }
