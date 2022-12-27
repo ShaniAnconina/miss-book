@@ -1,6 +1,8 @@
 
 
 export function BookPreview({ book }) {
+    
+    if (!book) return <h1>loading book</h1>
     return <section className="book-preview">
         <h2>{book.title}</h2>
         <p>{book.subtitle}</p>
