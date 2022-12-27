@@ -1,9 +1,14 @@
 import { bookService } from './../services/book.service.js';
 
-const { useState,useEffect } = React
+const { useState, useEffect, useRef } = React
 
 export function BookFilter({ onSetFilter }) {
     const [filterByToEdit, setFilterByToEdit] = useState(bookService.getDefaultFilter())
+    const elInputRef = useRef(null)
+
+    useEffect(() => {
+        elInputRef.current.focus()
+    }, [])
 
     useEffect(() => {
         onSetFilter(filterByToEdit)
@@ -28,19 +33,20 @@ export function BookFilter({ onSetFilter }) {
 
             <label htmlFor="txt">Book name: </label>
             <input type="text"
-            id="txt"
-            name="txt"
-            placeholder="By book name"
-            value={filterByToEdit.txt}
-            onChange={handleChange} />
+                id="txt"
+                name="txt"
+                placeholder="By book name"
+                value={filterByToEdit.txt}
+                onChange={handleChange}
+                ref={elInputRef} />
 
             <label htmlFor="maxPrice">Max price: </label>
             <input type="number"
-            id="maxPrice"
-            name="maxPrice"
-            placeholder="By max price"
-            value={filterByToEdit.maxPrice}
-            onChange={handleChange} />
+                id="maxPrice"
+                name="maxPrice"
+                placeholder="By max price"
+                value={filterByToEdit.maxPrice}
+                onChange={handleChange} />
 
             <button>Filter</button>
         </form>

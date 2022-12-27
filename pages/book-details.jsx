@@ -1,11 +1,36 @@
+const { useState, useEffect } = React
+const { useParams, useNavigate, Link } = ReactRouterDOM
 
+import { AddReview } from "../cmps/add-review.jsx"
+import { bookService } from "../services/book.service.js"
+// import { LongTxt } from "../cmps/long-txt"
 
-export function BookDetails({ book }) {
-    let pageCountText = getPageCountText(book)
-    let timeFromPublished = getPublishedDate(book)
-    let priceColor = getPriceColor(book)
+export function BookDetails() {
+    const [book, setBook] = useState(null)
+    const params = useParams()
+    const navigate = useNavigate()
+    
+    useEffect(() => {
+        loadBook()
+    }, [])
 
+    function loadBook() {
+        bookService.get(params.bookId)
+            .then((book) => setBook(book))
+            .catch((err) => {
+                console.log('Had issues in book details', err)
+                navigate('/book')
+            })
+    }
 
+    function onGoBack() {
+        navigate('/book')
+    }
+
+    if (!book) return <div>Loading...</div>
+    let pageCountText = bookService.getPageCountText(book)
+    let timeFromPublished = bookService.getPublishedDate(book)
+    let priceColor = bookService.getPriceColor(book)
 
     return <section className="book-details">
         <h2>{book.title}</h2>
@@ -13,35 +38,14 @@ export function BookDetails({ book }) {
         {book.listPrice.isOnSale && <span className="sale">On Sale</span>}
         {pageCountText && <span className="pageCount">{pageCountText}</span>}
         {timeFromPublished && <span className="timeFromPublished">{timeFromPublished}</span>}
-
         <p>Language: {book.language} | Pages: {book.pageCount} | Authors: {book.authors}</p>
         <img src={book.thumbnail} />
+        {/* <LongTxt /> */}
         <p>{book.description}</p>
         <p>Book price: <span className={`price ${priceColor}`}>{book.listPrice.amount} {book.listPrice.currencyCode}</span></p>
+        <button onClick={onGoBack}>Go Back</button>
+        <Link to={`/book/edit/${book.id}`} className="btn">Edit book</Link>
+        <hr />
+        <AddReview />
     </section>
-}
-
-function getPageCountText(book) {
-    let pageCountText = ''
-    if (book.pageCount > 500) pageCountText = 'Serious Reading'
-    if (book.pageCount > 200 && book.pageCount < 500) pageCountText = 'Descent Reading'
-    if (book.pageCount < 100) pageCountText = 'Light Reading'
-    return pageCountText
-}
-
-function getPublishedDate(book) {
-    let timeFromPublished
-    let currYear = new Date().getFullYear()
-    let diff = currYear - book.publishedDate
-    console.log('diff:', diff)
-    if (diff < 10) timeFromPublished = 'Vintage'
-    if (diff > 1) timeFromPublished = 'New'
-    return timeFromPublished
-}
-
-function getPriceColor(book) {
-    let priceColor
-    if (book.listPrice.amount > 150) priceColor = 'red'
-    if (book.listPrice.amount < 20) priceColor = 'green'
-    return priceColor
 }

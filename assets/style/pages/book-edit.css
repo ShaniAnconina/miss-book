@@ -1,0 +1,16 @@
+.book-edit {
+    display: inline-flex;
+}
+
+.book-edit form {
+    text-align: left;
+    width: 400px;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.269);
+    padding: 30px;
+}
+
+.book-edit form input {
+    margin: 10px 0;
+    border: none;
+    border-bottom: 2px var(--clr1) solid;
+}
